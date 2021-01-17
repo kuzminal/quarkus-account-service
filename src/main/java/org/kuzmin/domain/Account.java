@@ -1,18 +1,17 @@
 package org.kuzmin.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
+import java.util.Objects;
 
-@NoArgsConstructor
-@Getter
 public class Account {
     public Long accountNumber;
     public Long customerNumber;
     public String customerName;
     public BigDecimal balance;
     public AccountStatus accountStatus = AccountStatus.OPEN;
+
+    public Account() {
+    }
 
     public Account(Long accountNumber, Long customerNumber, String customerName,
                    BigDecimal balance) {
@@ -41,5 +40,34 @@ public class Account {
 
     public void addFunds(BigDecimal amount) {
         balance = balance.add(amount);
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public Long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public AccountStatus getStatus() {
+        return accountStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return accountNumber.equals(account.accountNumber) &&
+                customerNumber.equals(account.customerNumber);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountNumber, customerNumber);
     }
 }
